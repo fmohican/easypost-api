@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Wien-Subs EasyPost Integration
-// @version      0.2
+// @version      0.3
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
 // @match        https://www.wien-subs.ro/wp-admin/post-new.php
+// @match        https://www.wien-subs.ro/wp-admin/post.php?post=*&action=edit
 // @grant unsafeWindow
 // @grant window.close
 // @grant window.focus
