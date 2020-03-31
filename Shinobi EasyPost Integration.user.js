@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Shinobi EasyPost Integration
-// @version      0.3
+// @version      0.4
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
-// @match        https://shinobifansub.com/threads/*/article-edit
-// @match        https://shinobifansub.com/forums/*/post-thread
+// @match        https://shinobi-am.com/topic/*/article-edit
+// @match        https://shinobi-am.com/nod/*/post-thread
 // @grant unsafeWindow
 // @grant window.close
 // @grant window.focus
