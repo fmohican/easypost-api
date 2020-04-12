@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Shinobi EasyPost Integration
-// @version      0.4
+// @version      0.5
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
 // @match        https://shinobi-am.com/topic/*/article-edit
@@ -10,6 +10,7 @@
 // @grant window.focus
 // @grant        GM_*
 // @grant        GM.*
+// @require		 https://code.jquery.com/jquery-3.4.1.min.js
 // @supportURL   https://github.com/fmohican/easypost-api/issues
 // @source       https://github.com/fmohican/easypost-api
 // @updateURL    https://github.com/fmohican/easypost-api/raw/master/Shinobi%20EasyPost%20Integration.user.js
@@ -20,15 +21,17 @@
 // ==/UserScript==
 
 $(document).ready(function() {
-    var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+	function b64dec( str ) {
+		return decodeURIComponent(escape(window.atob( str )));
+	}
 
     function load_post_on_buttons_by_ids_sh(ids) {
 		var jqxhr = $.getJSON( "https://easypost.wien-subs.moe/api.php?whos=shinobi&type=post_data&ids="+ids, function() {
 			var resp = jqxhr.responseJSON;
 			var obj = JSON.parse(JSON.stringify(resp));
-			var post_data = Base64.decode(obj.post_data);
-			var title = Base64.decode(obj.title);
-			var tags = Base64.decode(obj.post_tags);
+			var post_data = b64dec(obj.post_data);
+			var title = b64dec(obj.title);
+			var tags = b64dec(obj.post_tags);
 			post_data = post_data.replace(/\n/g, "<br />")
 			post_data = post_data.replace(/'/gm,'"');
 			$('input[name="title"]').val(title);
@@ -47,17 +50,17 @@ $(document).ready(function() {
 			var resp = jqxhr.responseJSON;
 			var obj = JSON.parse(JSON.stringify(resp));
 
-			var title1 = Base64.decode(obj.title1);
-			var title2 = Base64.decode(obj.title2);
-			var title3 = Base64.decode(obj.title3);
-			var title4 = Base64.decode(obj.title4);
-			var title5 = Base64.decode(obj.title5);
+			var title1 = b64dec(obj.title1);
+			var title2 = b64dec(obj.title2);
+			var title3 = b64dec(obj.title3);
+			var title4 = b64dec(obj.title4);
+			var title5 = b64dec(obj.title5);
 
-			var id1 = Base64.decode(obj.id1);
-			var id2 = Base64.decode(obj.id2);
-			var id3 = Base64.decode(obj.id3);
-			var id4 = Base64.decode(obj.id4);
-			var id5 = Base64.decode(obj.id5);
+			var id1 = b64dec(obj.id1);
+			var id2 = b64dec(obj.id2);
+			var id3 = b64dec(obj.id3);
+			var id4 = b64dec(obj.id4);
+			var id5 = b64dec(obj.id5);
 
 			creat_btn(title1, id1);
 			creat_btn(title2, id2);
