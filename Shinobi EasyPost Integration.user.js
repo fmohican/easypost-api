@@ -10,7 +10,7 @@
 // @grant window.focus
 // @grant        GM_*
 // @grant        GM.*
-// @require		 https://code.jquery.com/jquery-3.4.1.min.js
+// @require	 https://code.jquery.com/jquery-3.4.1.min.js
 // @supportURL   https://github.com/fmohican/easypost-api/issues
 // @source       https://github.com/fmohican/easypost-api
 // @updateURL    https://github.com/fmohican/easypost-api/raw/master/Shinobi%20EasyPost%20Integration.user.js
