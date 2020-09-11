@@ -44,8 +44,8 @@ function btnTrigger() {
     $(document).on('click', '.easypost', function () {
         let data = getData($(this).data('id'));
         //$('input#title').val(data.title);
-        $('input#autotmdb').val(data.imdb);
-        $('input#autoimdb').val(data.tmdb);
+        $('input#autoimdb').val(data.imdb);
+        $('input#autotmdb').val(data.tmdb);
         $('input#tvdb').val(data.tvdb);
         $('input#autotvdb').val(data.tvdb);
         $('input[name="mal"]').val(data.mal);
