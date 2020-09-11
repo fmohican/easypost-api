@@ -26,7 +26,7 @@ function btnReload() {
 function getdata_list() {
     let req = $.ajax({
         type: "GET",
-        url: "https://wsp.ventus.me/easypost.wien-subs.moe/api.php?whos=anirome",
+        url: "https://easypost.wien-subs.moe/api.php?whos=anirome",
         async: false
     }).responseText
     req = JSON.parse(atob(req));
@@ -59,7 +59,7 @@ function btnTrigger() {
 function getData(id) {
     let req = $.ajax({
         type: "GET",
-        url: "https://wsp.ventus.me/easypost.wien-subs.moe/api.php?whos=aniromeget&id="+id,
+        url: "https://easypost.wien-subs.moe/api.php?whos=aniromeget&id="+id,
         async: false
     }).responseText
     req = JSON.parse(atob(req));
