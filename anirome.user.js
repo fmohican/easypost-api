@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         AniroME EasyPost Integration
-// @version      0.2
+// @version      0.3
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
 // @match        https://aniro.me/upload/*
@@ -17,6 +17,27 @@
 // @license      WTFPL
 // @run-at       document-end
 // ==/UserScript==
+
+function MediaInfoParse(media) {
+    const regex = /^Height\s*: (480|576|720|1080|2160) pixels$/m;
+    let m;
+    if ((m = regex.exec(media)) !== null) {
+        m.forEach((match, groupIndex) => {
+            if(match == "2160")
+                $('select#autores').val(2);
+            else if(match == "1080")
+                $('select#autores').val(3);
+            else if(match == "720")
+                $('select#autores').val(5);
+            else if(match == "576")
+                $('select#autores').val(6);
+            else if(match == "480")
+                $('select#autores').val(8);
+            else
+                $('select#autores').val(10);
+        });
+    }
+}
 
 function btnReload() {
     $('.upload').prepend("<div class='row' id='btn-reload'><a href='#' class='btn btn-danger easypost-reload'>[Reload Buttons]</a></div>");
@@ -59,6 +80,9 @@ function btnTrigger() {
         $('textarea[name="description"]').val(data.data);
         $('textarea[name="mediainfo"]').val(data.mediainfo);
         $('.selectpicker').selectpicker('val', data.geners);
+        MediaInfoParse(data.mediainfo);
+        $('select#autotype').val(5);
+
     });
 }
 
