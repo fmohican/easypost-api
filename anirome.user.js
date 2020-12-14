@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         AniroME EasyPost Integration
-// @version      0.3
+// @version      0.4
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
 // @match        https://aniro.me/upload/*
@@ -23,18 +23,19 @@ function MediaInfoParse(media) {
     let m;
     if ((m = regex.exec(media)) !== null) {
         m.forEach((match, groupIndex) => {
+            console.log(match);
             if(match == "2160")
-                $('select#autores').val(2);
+                $('select[name=resolution_id]').val(2);
             else if(match == "1080")
-                $('select#autores').val(3);
+                $('select[name=resolution_id]').val(3);
             else if(match == "720")
-                $('select#autores').val(5);
+                $('select[name=resolution_id]').val(5);
             else if(match == "576")
-                $('select#autores').val(6);
+                $('select[name=resolution_id]').val(6);
             else if(match == "480")
-                $('select#autores').val(8);
+                $('select[name=resolution_id]').val(8);
             else
-                $('select#autores').val(10);
+                $('select[name=resolution_id]').val(10);
         });
     }
 }
@@ -70,7 +71,7 @@ function doButtons(data) {
 function btnTrigger() {
     $(document).on('click', '.easypost', function () {
         let data = getData($(this).data('id'));
-        //$('input#title').val(data.title);
+        $('input[name=name]').val(data.title);
         $("textarea#meta_decription").val(data.desc);
         $('input#autoimdb').val(data.imdb);
         $('input#autotmdb').val(data.tmdb);
@@ -79,7 +80,7 @@ function btnTrigger() {
         $('input[name="mal"]').val(data.mal);
         $('textarea[name="description"]').val(data.data);
         $('textarea[name="mediainfo"]').val(data.mediainfo);
-        $('.selectpicker').selectpicker('val', data.geners);
+        $('input[name=keywords]').val(data.geners.join(", "));
         MediaInfoParse(data.mediainfo);
         $('select#autotype').val(5);
 
