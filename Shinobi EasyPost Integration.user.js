@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name         Shinobi EasyPost Integration
-// @version      0.5
+// @version      0.6
 // @description  You are lazy shit? It's okay cuz i'm.
 // @author       Fmohican
-// @match        https://shinobi-am.com/topic/*/article-edit
-// @match        https://shinobi-am.com/nod/*/post-thread
+// @match        https://shinobi-am.com/wp-admin/post-new.php
 // @grant unsafeWindow
 // @grant window.close
 // @grant window.focus
@@ -32,18 +31,38 @@ $(document).ready(function() {
 			var post_data = b64dec(obj.post_data);
 			var title = b64dec(obj.title);
 			var tags = b64dec(obj.post_tags);
-			post_data = post_data.replace(/\n/g, "<br />")
+			// post_data = post_data.replace(/\n/g, "<br />")
 			post_data = post_data.replace(/'/gm,'"');
-			$('input[name="title"]').val(title);
-			$('div.fr-element').prepend(post_data);
-			$('input.select2-search__field[type="search"]').val(tags);
+			//Post_Title
+			$('input[name="post_title"]').val(title);
+			//Post Body
+			$('.acf-input>textarea').text(post_data);
+			//Post Tags
+			$('input#new-tag-post_tag').val(tags);
+            //setparteneriat
+            $('div.acf-input > div > label > div').click();
+            $('select#acf-field_606caa6fe22a7').val('wiensubs');
+            //tl
+            $('#acf-field_5ecd84283ed94-field_5ecd8539182fb').val(obj.tl);
+            $('#acf-field_5ecd84283ed94-field_5ecd87312cac8').val(obj.tlc);
+            $('#acf-field_5ecd84283ed94-field_5ecd8547182fc').val(obj.ed);
+            $('#acf-field_5ecd84283ed94-field_5ecd87bd363be').val(obj.enc);
+            $('#acf-field_5ef235f51c641-anime').prop('checked', true);
+
+			setTimeout($('input.tagadd').click(), 1000);
+			//Add Title to Search box
+			var search_data = title.replace(/(- \d*|Episodul \d*)/gm, '');
+			setTimeout($('input.fc-search-field').val(search_data), 1000);
+			//Set Post Thumb
+			setTimeout($('#set-post-thumbnail').click(), 1000);
+			setTimeout($('input#media-search-input').val(search_data), 3000);
         });
     }
 	function make_new_buttons() {
 		$('.do_easypost_thing').click(function() { load_post_on_buttons_by_ids_sh($(this).attr('data_id'));});
 	}
 	function creat_btn(title, id) {
-		$('script.js-attachmentUploadTemplate').after('<button type="button" class="button button--link do_easypost_thing" data_id="'+id+'"><span class="button-text">'+title+'</span></button>');
+		$('.easypost').append('<button type="button" style="margin-right:10px;" class="button do_easypost_thing" data_id="'+id+'">'+title+'</button>');
 	}
 	function load_last_five_post() {
 		var jqxhr = $.getJSON( "https://easypost.wien-subs.moe/api.php?whos=shinobi&limit=5&type=titles", function() {
@@ -69,8 +88,9 @@ $(document).ready(function() {
 			creat_btn(title5, id5);
         });
 	}
+    $("#postbox-container-2").prepend("<div class='postbox easypost' style='padding: 5px 10px;'></div>");
 	load_last_five_post();
     setTimeout(make_new_buttons, 1000);
-    $('input[value="image"]').click()
+    $('input[value="image"]').click();
     $('input[name="catlinks[1]"]').click();
 });
